@@ -28,3 +28,12 @@ lia.cache
 nia.cache
 nlia.cache
 nra.cache
+comment.cut
+coqdoc.sty
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.pdf
+FreeMonadicProving.tex
