@@ -1,12 +1,8 @@
-\documentclass[sigplan, review]{acmart}\settopmatter{printfolios=true}
-%% For final camera-ready submission
-% \documentclass[acmsmall]{acmart}\settopmatter{}
-
-
+\documentclass[english,submission]{programming}
+\usepackage[backend=bibtex,autopunct=true]{biblatex}
 \usepackage{
   , coqdoc
   , todonotes
-  , csquotes
   , balance
   , lettrine   % use a large font for first letter
   % , MorrisIn    % font for starting letter of chapter
@@ -14,7 +10,7 @@
   , Zallman      % font for starting letter of chapter
 }
 
-\usepackage[utf8]{inputenc}
+\usepackage{fancyvrb}
 
 % \renewcommand{\LettrineFontHook}{\MorrisInfamily}
 % \renewcommand{\LettrineFontHook}{\EileenBlfamily}
@@ -26,26 +22,19 @@
 \renewcommand{\verbatim@font}{\ttfamily\small}
 \makeatother
 
-\renewcommand{\thesection}{Chapter~\Roman{section}}
-
-% This is a acm-specific command to change the name of figures
+% rename figure to scroll
 \captionsetup[figure]{name={Scroll}}
-\renewcommand{\thefigure}{\Roman{figure}}
-
-% Change style of references
-\def\nospace~{}
-\renewcommand{\sectionautorefname}{\nospace}
-\renewcommand{\figureautorefname}{Scroll}
+\renewcaptionname{english}{\figureautorefname}{Scroll}
 
 \newcommand{\jump}[1]{\vspace{1ex}\noindent\textit{#1}\vspace{1ex}}
-\newenvironment{spec}{\small}{\normalsize}
 
-
-\renewenvironment{coqdoccomment}{\footnotesize\tt(*}{*)\normalsize}
+\renewenvironment{coqdoccomment}{\small\texttt(*}{*)\normalsize}
 \renewenvironment{coqdoccode}{\small}{\normalsize}
 
-\bibpunct{(}{)}{;}{a}{},
-\let\cite=\citeauthor
+\renewcommand{\cite}[1]{\citeauthor*{#1}~\autocite{#1}}
+
+
+\bibliography{paper}
 
 %% don't color citations/links green
 \hypersetup{
@@ -53,155 +42,57 @@
     pdfborder={0 0 0},
 }
 
-\makeatletter\if@ACM@journal\makeatother
-%% Journal information (used by PACMPL format)
-%% Supplied to authors by publisher for camera-ready submission
-\acmJournal{PACMPL}
-\acmVolume{1}
-\acmNumber{1}
-\acmArticle{1}
-\acmYear{2018}
-\acmMonth{1}
-\acmDOI{10.1145/nnnnnnn.nnnnnnn}
-\startPage{1}
-\else\makeatother
-%% Conference information (used by SIGPLAN proceedings format)
-%% Supplied to authors by publisher for camera-ready submission
-\acmConference[Haskell'18]{ACM SIGPLAN Haskell Symposium 2018}{September 27--28, 2018}{St. Louis, Missouri, USA}
-\acmYear{2018}
-\acmISBN{978-x-xxxx-xxxx-x/YY/MM}
-\acmDOI{10.1145/nnnnnnn.nnnnnnn}
-\startPage{1}
-\fi
-
-
-%% Copyright information
-%% Supplied to authors (based on authors' rights management selection;
-%% see authors.acm.org) by publisher for camera-ready submission
-\setcopyright{none}             %% For review submission
-%\setcopyright{acmcopyright}
-%\setcopyright{acmlicensed}
-%\setcopyright{rightsretained}
-%\copyrightyear{2017}           %% If different from \acmYear
-
-
-%% Bibliography style
-\bibliographystyle{ACM-Reference-Format}
-%% Citation style
-%% Note: author/year citations are required for papers published as an
-%% issue of PACMPL.
-\citestyle{acmauthoryear}   %% For author/year citations
-
-
 \begin{document}
 
-%% Title information
-\title{One Monad to Prove Them All (Functional Pearl)}
-% \subtitle{Free Monads, Containers, and Monad-Generic Proofs}
-                                        %% [Short Title] is optional;
-                                        %% when present, will be used in
-                                        %% header instead of Full Title.
-%\titlenote{with title note}             %% \titlenote is optional;
-                                        %% can be repeated if necessary;
-                                        %% contents suppressed with 'anonymous'
-%\subtitle{Subtitle}                     %% \subtitle is optional
-%\subtitlenote{with subtitle note}       %% \subtitlenote is optional;
-                                        %% can be repeated if necessary;
-                                        %% contents suppressed with 'anonymous'
+\title{One Monad to Prove Them All}
+% \subtitle{Preparing Articles for Programming}% optional
+% \titlerunning{Preparing Articles for Programming} %optional, in case that the title is too long; the running title should fit into the top page column
 
-
-%% Author information
-%% Contents and number of authors suppressed with 'anonymous'.
-%% Each author should be introduced by \author, followed by
-%% \authornote (optional), \orcid (optional), \affiliation, and
-%% \email.
-%% An author may have multiple affiliations and/or emails; repeat the
-%% appropriate command.
-%% Many elements are not rendered, but should be provided for metadata
-%% extraction tools.
-
-%% Author with single affiliation.
+\author[a]{Sandra Dylus}
+\authorinfo{\email{sad@informatik.uni-kiel.de}}
+\affiliation[a]{University of Kiel, Germany}
 \author{Jan Christiansen}
-% \authornote{with author1 note}          %% \authornote is optional;
-                                        %% can be repeated if necessary
-% \orcid{nnnn-nnnn-nnnn-nnnn}             %% \orcid is optional
-\affiliation{
-  % \position{Position1}
-  % \department{Fachbereich 3: Information und Kommunikation}              %% \department is recommended
-  \institution{Flensburg University of Applied Sciences}            %% \institution is required
-  % \streetaddress{Kanzleistraße 91-93}
-  % \city{Flensburg}
-  % \state{State1}
-  % \postcode{24943}
-  % \country{Germany}
+\authorinfo{\email{jan.christiansen@hs-flensburg.de}}
+\affiliation{Flensburg University of Applied Sciences, Germany}
+\author[a]{Finn Teegen}
+\authorinfo{\email{fte@informatik.uni-kiel.de}}
+
+%% Keywords
+%% comma separated list
+\keywords{Haskell, monads, free monad, containers, verification}  %% \keywords is optional
+
+
+%%%%%%%%%%%%%%%%%%
+%% These data MUST be filled for your submission. (see 5.3)
+\paperdetails{
+  %% perspective options are: art, sciencetheoretical, scienceempirical, engineering.
+  %% Choose exactly the one that best describes this work. (see 2.1)
+  perspective=art,
+  %% State one or more areas, separated by a comma. (see 2.2)
+  %% Please see list of areas in http://programming-journal.org/cfp/
+  %% The list is open-ended, so use other areas if yours is/are not listed.
+  area={General-purpose programming, Program verification},
+  %% You may choose the license for your paper (see 3.)
+  %% License options include: cc-by (default), cc-by-nc
+  % license=cc-by,
 }
-\email{jan.christiansen@hs-flensburg.de}          %% \email is recommended
+%%%%%%%%%%%%%%%%%%
 
-%% Author with two affiliations and emails.
-\author{Sandra Dylus}
-% \authornote{with author2 note}          %% \authornote is optional;
-                                        %% can be repeated if necessary
-% \orcid{nnnn-nnnn-nnnn-nnnn}             %% \orcid is optional
-\affiliation{
-  % \position{Position2b}
-  % \department{Programmiersprachen und Übersetzerkonstruktion}             %% \department is recommended
-  \institution{University of Kiel}           %% \institution is required
-  % \streetaddress{Christian-Albrechts-Platz 4}
-  % \city{Kiel}
-  % \state{State2b}
-  % \postcode{24118}
-  % \country{Germany}
-}
-\email{sad@informatik.uni-kiel.de}         %% \email is recommended
+%%%%%%%%%%%%%%%%%%
+%% These data are provided by the editors. May be left out on submission.
+%\paperdetails{
+%  submitted=2016-08-10,
+%  published=2016-10-11,
+%  year=2016,
+%  volume=1,
+%  issue=1,
+%  articlenumber=1,
+%}
+%%%%%%%%%%%%%%%%%%
 
-%% Author with two affiliations and emails.
-\author{Finn Teegen}
-% \authornote{with author2 note}          %% \authornote is optional;
-                                        %% can be repeated if necessary
-% \orcid{nnnn-nnnn-nnnn-nnnn}             %% \orcid is optional
-\affiliation{
-  % \position{Position2b}
-  % \department{Programmiersprachen und Übersetzerkonstruktion}             %% \department is recommended
-  \institution{University of Kiel}           %% \institution is required
-  % \streetaddress{Christian-Albrechts-Platz 4}
-  % \city{Kiel}
-  % \state{State2b}
-  % \postcode{24118}
-  % \country{Germany}
-}
-\email{fte@informatik.uni-kiel.de}         %% \email is recommended
-
-
-%% Paper note
-%% The \thanks command may be used to create a "paper note" ---
-%% similar to a title note or an author note, but not explicitly
-%% associated with a particular element.  It will appear immediately
-%% above the permission/copyright statement.
-% \thanks{with paper note}                %% \thanks is optional
-                                        %% can be repeated if necesary
-                                        %% contents suppressed with 'anonymous'
-
-
-%% Abstract
-%% Note: \begin{abstract}...\end{abstract} environment must come
-%% before \maketitle command
-\begin{abstract}
-One Monad to Prove Them All is a modern fairy tale about curiosity and perseverance, two important properties of a successful PhD student.
-We follow the PhD student Mona on her adventurous journey of proving properties about Haskell programs in the proof assistant Coq.
-In quest for a solution Mona goes on an educating journey through the land of functional programming.
-We follow her on her journey when she learns about concepts like free
-monads and containers as well as basics and restrictions of proof
-assistants like Coq.
-These concepts are well-known individually, but their interplay gives rise to a solution for Mona's problem that has not been presented before.
-Mona's final solution does not only work for a specific monad instance but even allows her to prove monad-generic properties.
-Instead of proving properties over and over again for specific monad instances she is able to prove properties that hold for all monads.
-
-If you are a citizen of the land of functional programming or are at least familiar with its customs, had a journey that involved reasoning about functional programs of your own, or are just a curious soul looking for the next story about monads and proofs, then this tale is for you.
-\end{abstract}
-
-
-%% 2012 ACM Computing Classification System (CSS) concepts
-%% Generate at 'http://dl.acm.org/ccs/ccs.cfm'.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Please go to https://dl.acm.org/ccs/ccs.cfm and generate your Classification
+% System [view CCS TeX Code] stanz and copy _all of it_ to this place.
 \begin{CCSXML}
 <ccs2012>
 <concept>
@@ -221,17 +112,66 @@ If you are a citizen of the land of functional programming or are at least famil
 \ccsdesc[500]{Software and its engineering~Functional languages}
 %% End of generated code
 
-
-%% Keywords
-%% comma separated list
-\keywords{Haskell, monads, free monad, containers, verification, non-determinism, fairy tale}  %% \keywords is optional
-
-
 %% \maketitle
 %% Note: \maketitle command must come after title commands, author
 %% commands, abstract environment, Computing Classification System
 %% environment and commands, and keywords command.
 \maketitle
+
+\begin{abstract}
+One Monad to Prove Them All is a modern fairy tale about curiosity and
+perseverance, two important properties of a successful PhD student.
+We follow the PhD student Mona on her adventurous journey of proving
+properties about Haskell programs in the proof assistant Coq.
+
+On the one hand, as a PhD student in computer science Mona observes an increasing demand for correct software products.
+In particular, because of the large amount of existing software, verifying existing software products becomes more important.
+Verifying programs in the functional programming language Haskell is no exception.
+On the other hand, Mona is delighted to see that communities in the
+area of theorem proving become popular.
+Thus, Mona sets out to learn more about the interactive theorem prover Coq and verifying Haskell programs in Coq.
+
+To prove properties about a Haskell function in Coq, Mona has to
+translate the function into Coq code.
+As Coq programs have to be total and Haskell programs are often not,
+Mona has to model partiality explicitly in Coq.
+In her quest for a solution Mona finds an ancient book that explains
+how properties about Haskell functions can be proven in the proof
+assistant Agda by translating Haskell programs into monadic Agda
+programs.
+By instantiating the monadic program with a concrete monad instance
+the proof can be either performed in a total or a partial setting.
+Mona discovers that the proposed transformation does not work in Coq
+due to a restriction in the termination checker.
+In fact the transformation does not work in Agda anymore as well, as
+the termination checker in Agda has been improved.
+
+We follow Mona on an educating journey through the land of functional
+programming where she learns about concepts like free
+monads and containers as well as basics and restrictions of proof
+assistants like Coq.
+These concepts are well-known individually, but their interplay gives
+rise to a solution for Mona's problem based on the originally proposed
+monadic tranformation that has not been presented before.
+When Mona starts to test her approach by proving a statement about
+simple Haskell functions, she realizes that her approach has an
+additional advantage over the original idea in Agda.
+Mona's final solution does not only work for a specific monad instance
+but even allows her to prove monad-generic properties.
+Instead of proving properties over and over again for specific monad
+instances she is able to prove properties that hold for all monads.
+In order to strengthen her confidence in the practicability of her
+approach, Mona evaluates her approach in a case study that compares
+two implementations for queues.
+In order to share the results with other functional programmers the fairy tale is available as a literate Coq file.
+
+If you are a citizen of the land of functional programming or are at
+least familiar with its customs, had a journey that involved reasoning
+about functional programs of your own, or are just a curious soul
+looking for the next story about monads and proofs, then this tale is
+for you.
+\end{abstract}
+
 
 \input{FreeMonadicProving}
 

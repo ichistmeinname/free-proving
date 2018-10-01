@@ -35,5 +35,7 @@ coqdoc.sty
 *.blg
 *.log
 *.out
+*.xml
+*blx.bib
 *.pdf
 FreeMonadicProving.tex
