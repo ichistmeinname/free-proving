@@ -46,7 +46,7 @@ Require Import Coq.Program.Equality.
 * Preamble
 %\label{section:introduction}%
 
-%\lettrine{O}{nce}% upon a time there was a computer scientist called Mona Dorothee living in the beautiful land of functional programming.
+%\lettrine{O}{nce}% upon a time there was a computer scientist called Mona D. living in the beautiful land of functional programming.
 The land of functional programming was divided into several kingdoms.
 Mona lived in the kingdom of Haskell, a land where all citizens used the pure lazy functional programming language Haskell.
 
@@ -56,41 +56,41 @@ With Coq, the citizens were not only able to write functional programs but also 
 
 Mona was fascinated by the idea of proving properties about programs.
 While her colleagues in the department of software engineering were still writing tests and hoped to catch all bugs that way, she could once and for all prove that her programs were correct.
-Mona's adviser suggested to her to visit a befriended department where she could stay for a semester.
+Mona's adviser suggested to her to visit an allied department where she could stay for a semester.
 With her good intentions at heart, our hero set out to the kingdom of Coq to learn more about the Coq programming language.
 
 Soon after Mona  got to the kingdom of Coq she realized that proving statements about programs came at a price in Coq.
 In Coq, all functions have to be provably total.
-Most of the citizens in the kingdom of Haskell, however, did not care about totality as they were used to work with partial functions.
+Most of the citizens in the kingdom of Haskell, however, did not care about totality as they were used to working with partial functions.
 Therefore, Mona could not simply use the Haskell programs she had one-to-one in Coq.
 
-Our hero went to the largest library in the kingdom of Coq and consulted many %books\footnote{In Mona's days the term book was used as a synonym for all kinds of scientific references, not only for actual books.}%
-written by wise women and men from the entire land of functional programming.
-The first book she found was written by %\cite{breitner2018ready}%.
-In this book, the authors proved statements about Haskell programs in Coq.
+Our hero went to the largest library in the kingdom of Coq and consulted many %manuscripts\footnote{In Mona's days the term manuscript was used as a synonym for all kinds of scientific references.}%
+written by sages from the entire land of functional programming.
+The first manuscript she found was written by %\cite{breitner2018ready}%.
+In this manuscript, the authors proved statements about Haskell programs in Coq.
 They transformed Haskell programs into Coq programs by keeping as much of the structure of the Haskell programs as possible.
 In order to model partial functions they added an opaque constant [default : A] for every non-empty type [A].
 By means of this constant they defined a function [error : String -> A] that was used to model the corresponding Haskell function.
 Because [default] is opaque, the concrete value of [default] cannot be used in any proofs.
 
-While Mona really liked the book by %\citeauthor*{breitner2018ready}%, they could not reason about partial values and, thus, about the strictness of an implementation.
-Furthermore, she found books that emphasized the importance of considering partial values.
-For example, in a book by %\cite{johann2004free}% she read about the [destroy]/[unfoldr] rule as presented by %\cite{svenningsson2002shortcut}%.
+While Mona really liked the manuscript by %\citeauthor*{breitner2018ready}%, they could not reason about partial values and, thus, about the strictness of an implementation.
+Furthermore, she found manuscripts that emphasized the importance of considering partial values.
+For example, in a manuscript by %\cite{johann2004free}% she read about the [destroy]/[unfoldr] rule as presented by %\cite{svenningsson2002shortcut}%.
 This rule fuses a list consumer with a list producer.
 The [destroy]/[unfoldr] rule does not hold if partial values are considered and a strict evaluation primitive like %\texttt{seq}% is available.
 Moreover, partial functions are often necessary in the implementation of data structures, whose invariants cannot be encoded in Haskell's type system.
 For example, a function might be undefined for an empty list but an invariant states that the argument will never be an empty list.
 
-Mona also read a book by %\cite{danielsson2006fast}% about relating the total interpretation of a function with an interpretation of the same function that models partiality.
+Mona also read a manuscript by %\cite{danielsson2006fast}% about relating the total interpretation of a function with an interpretation of the same function that models partiality.
 In essence, when the function is only applied to total arguments, the two interpretations behave the same.
-While Mona saw the importance of this connection ,the approach was still not able to argue about partial functions.
+While Mona saw the importance of this connection, the approach was still not able to argue about partial functions.
 For example, it was not sufficient that a program transformation held for all total arguments, if the compiler could not enforce that the arguments are always total.
 
 Mona did not give up.
 There had to be a way to get the best of both worlds.
 That is, argue about a Haskell function with respect to total values whenever possible and argue about partial values only if necessary.
 Mona went to the largest library in the whole land of functional programming.
-And indeed she found a book by %\cite{abel2005verifying}% that discussed exactly the problem she was trying to solve.
+And indeed she found a manuscript by %\cite{abel2005verifying}% that discussed exactly the problem she was trying to solve.
 %\citeauthor*{abel2005verifying}% lived in the nearby magical kingdom of Agda, where dependently typed programming was also highly regarded by its citizens.
 %\citeauthor*{abel2005verifying}% presented an approach to translate Haskell programs into monadic Agda programs.
 By instantiating the monadic program with a concrete monad instance one could choose the model a statement should be proven in.
@@ -100,7 +100,8 @@ Furthermore, she would not have to make any changes to her program but could arg
 %\citeauthor*{abel2005verifying}% used monadic expressions to model possibly undefined expressions.
 As Haskell is non-strict, a data structure may contain an undefined expression that is never demanded.
 For example, a cons may have an undefined tail.
-Mona eagerly defined the following inductive data type for lists in Coq, which resembled the corresponding definition by %\citeauthor*{abel2005verifying}% in Agda.%\footnote{Coq uses GADT-style data type definitions.}
+Mona enthusiastically defined the following inductive data type for lists in Coq, which resembled the corresponding definition by %\citeauthor*{abel2005verifying}% in Agda.%\footnote{Coq uses GADT-style data type definitions.}
+
  *)
 
 Fail Inductive List M A :=
@@ -109,7 +110,7 @@ Fail Inductive List M A :=
 
 (**
 In Coq, all arguments of a type or function can be annotated: values as well as types.
-As a Haskell programmer, Mona was not used to annotate type variables with their types, so she used the code convention that type variables would not be annotated, if they could be inferred --- just like she was used to in her Haskell programs.
+As a Haskell programmer, Mona was not used to annotating type variables with their types, so she used the code convention that type variables would not be annotated, if they could be inferred --- just like she was used to in her Haskell programs.
 That is, Mona could use [M : Type -> Type] and [A : Type] in the definition of [List], but these annotations were inferred by the system, so she left them out.
 Moreover, she used the convention that constructors start with a lower-case letter.
 
@@ -125,25 +126,25 @@ Non-strictly positive occurrence of \enquote{\coqdocvar{List}} in \enquote{\coqd
 Mona thought that she had made a mistake when translating the Agda definition to Coq.
 She wrote a letter to a friend in the kingdom of Agda.
 A few days later she received an unexpected answer: the definition did not work in Agda either.
-At the time the book by %\cite{abel2005verifying}% was written, the rules in the kingdom of Agda were less strict, but that was a long time ago.
+At the time the manuscript by %\cite{abel2005verifying}% was written, the rules in the kingdom of Agda were less strict, but that was a long time ago.
 Meanwhile, the king of the kingdom of Agda had realized that the rules needed to be changed.
 The programs that could be defined using the old rules were not safe!
 Following the example of the magical kingdom of Coq, non-strictly positive occurrences as mentioned in the error message above were now disallowed in the kingdom of Agda as well.
 
-In this story, we will follow Mona Dorothee on her journey to find a model for Haskell programs in Coq that obeys the king's rules.
+In this story, we will follow Mona D. on her journey to find a model for Haskell programs in Coq that obeys the king's rules.
 We will learn the laws of the kingdom of Coq from the perspective of a programmer from the kingdom of Haskell.
 Mona will also meet fellows with an interest in  more theoretical aspects of functional programs and approaches for generic programming in Haskell.
-On the way to achieve her goal, there are many obstacles to overcome.
-Led by her curiosity and her perseverance, reading a lot of books and meeting with her fellows will ultimately give our hero the inspiration how to tackle her problem.
+On the way to achieving her goal, there are many obstacles to overcome.
+Led by her curiosity and her perseverance, reading a lot of manuscripts and meeting with her fellows will ultimately give our hero the inspiration how to tackle her problem.
 
 * The Problem
 %\label{section:the-problem}%
 
-%\lettrine{M}{ona}% spent the next days searching for books about possible adaptations of the approach by %\cite{abel2005verifying}% that worked in a current version of Coq.
+%\lettrine{M}{ona}% spent the next days searching for manuscripts about possible adaptations of the approach by %\cite{abel2005verifying}% that worked in a current version of Coq.
 Nothing came up, but Mona did not want to give up.
 Thus, she used her most powerful weapon in defeating scientific obstacles: her perseverance.
 She tried multiple simplified versions of data type definitions similar to [List] and checked for each whether the error still occurred.
-The simplest data type definition she found that caused the same error looked as follows.%\footnote{The type \coqdocvar{nat} is the type of Peano numbers in Coq.}%
+The simplest data type definition she found that caused the same error looked as follows.
 
 *)
 
@@ -161,7 +162,7 @@ Non-strictly positive occurrence of \enquote{\coqdocvar{NonStrictlyPos}} in \enq
 So Mona wondered what it meant that [NonStrictlyPos] occurs in a non-strictly positive way
 in the type signature of [con : (NonStrictlyPos -> nat) -> NonStrictlyPos].
 Mona remembered hearing about a class of Adam Chlipala explaining the intricacies of Coq very well.
-She looked up the term %\enquote{strictly positive}% and indeed found the relevant note in %\citeauthor*{chlipala2011certified}%'s book %\autocite{chlipala2011certified}%.
+She looked up the term %\enquote{strictly positive}% and indeed found the relevant note in %\citeauthor*{chlipala2011certified}%'s manuscript %\autocite{chlipala2011certified}%.
 
 %\begin{quote}
 We have run afoul of the strict positivity requirement for inductive definitions, which says that the type being defined may not occur to the left of an arrow in the type of a constructor argument.
@@ -190,12 +191,15 @@ Mona still wondered why the king disallowed a definition like [NonStrictlyPos] i
 At lunch the next day, she talked about her insights with some PhD students.
 One of them had read about restrictions of dependently typed languages and explained to her that while the definition itself did not cause any trouble, it is possible to define functions that cause trouble.
 Back at Mona's computer, they tried to understand the restriction given the following innocent looking function in Coq assuming that the above definition of [NonStrictlyPos] was accepted.
+
+%\small%
 [[
 Definition applyFun (t : NonStrictlyPos) : nat :=
   match t with
   | con f => f t
   end.
 ]]
+%\normalsize%
 The function [applyFun] simply took a value of type [NonStrictlyPos] and applied the function inside the argument of [con] to the value itself.
 A problematic example usage of this function is the expression [applyFun   (con applyFun)].
 Reducing the expression by using the definition of [applyFun] yields [applyFun (con applyFun)] again, which indicates that this expression will not terminate.
@@ -209,9 +213,9 @@ Fail Inductive Mu A := mu : (Mu A -> A) -> Mu A.
 (**
 
 %\noindent% This data type can be used to implement a fix-point combinator without explicit recursion.
-Before her colleague left to prepare his next tutoring class, he suggested her to consult a book by %\cite{mcadam1997wraps}% to refresh her memory about the [Mu] data type.
-If Coq allows a data type like [Mu], all of the sudden general recursion is available and the corresponding logic becomes inconsistent.
-Thus, a data type definition that has recursive occurrences to the left of an arrow as in [Mu] and [NonStrictlyPos] are not allowed.
+Before her colleague left to prepare his next tutoring class, he suggested her to consult a manuscript by %\cite{mcadam1997wraps}% to refresh her memory about the [Mu] data type.
+If Coq allows a data type like [Mu], all of a sudden general recursion is available and the corresponding logic becomes inconsistent.
+Thus, a data type definition that has recursive occurrences to the left of an arrow as in [Mu] and [NonStrictlyPos] is not allowed.
 When %\citeauthor*{abel2005verifying}% published their work, Agda did not perform any termination checks and, as a consequence, did not check the strict positivity requirement.
 
 While Mona now understood why the data type as defined by %\citeauthor*{abel2005verifying}% is not allowed, it was still not obvious to her why the restriction is violated in the case of [List].
@@ -226,7 +230,7 @@ Definition Cont R A := (A -> R) -> R.
 
 (**
 
-%\noindent% When she instantiated [M] in the definition of [List] with [Cont], she got the following type that violated the strict positivity requirement.
+%\noindent% When she instantiated [M] in the definition of [List] with [Cont R] for some [R], she got the following type that violated the strict positivity requirement.
 
 *)
 
@@ -238,10 +242,10 @@ Fail Inductive ListC R A :=
 
 The definition of [consC] is more delicate than the definitions before.
 Here, [ListC] occurs non-strictly positive in the second argument of the constructor [consC], namely [(ListC R A -> R) -> R].
-Mona's colleague referred her to a book by %\cite{coquand1990inductively}% that introduced the restriction to forbid non-strictly positive types in the kingdom of Coq.
-He also brought to her attention that technically, while it was not, the type [ListC] could be allowed in Agda.
+Mona's colleague referred her to a manuscript by %\cite{coquand1990inductively}% that introduced the restriction to forbid non-strictly positive types in the kingdom of Coq.
+He also brought to her attention that technically, although it was not the case, the type [ListC] could be allowed in Agda.
 In Agda only types with recursive occurrences in negative positions have to be disallowed.
-Negative positions are positions left to an odd number of arrows.
+Negative positions are positions left of an odd number of arrows.
 For example, the definition of [NonStrictlyPos] cannot be allowed because the recursive occurrence in [NonStrictlyPos -> nat] is left of one arrow.
 Just as the definition of [Mu] cannot be allowed in Agda either because the recursive occurrence in [Mu A -> A] is left of one arrow.
 In contrast the recursive occurrence in [(ListC R A -> R) -> R] is left of two arrows and, therefore, could be allowed in Agda.
@@ -266,7 +270,7 @@ Mona was a regular reader of the %\emph{Haskell Weekly News}%, a gazette where c
 She remembered a lot of stories about monadic abstractions and in particular about the free monad.
 The free monad turns any functor into a monad and is usually defined as a data type with two constructors, [pure] and [impure].
 Mona could use the concrete data type definition of a free monad to represent the monadic part in the problematic list definition.
-Eager to try out this idea, Mona defined the following data type, where the type variable [F] needs to be a functor to make [Free F] a monad.
+Keen to try out this idea, Mona defined the following data type, where the type variable [F] needs to be a functor to make [Free F] a monad.
 
 *)
 
@@ -279,10 +283,10 @@ Fail Inductive Free F A :=
 Again, Coq rejected the definition of this data type.
 In the constructor [impure] the type variable [F] is applied to [Free F A] and, thus, is violating the aforementioned strict positivity requirement.
 Mona was disappointed that she could not apply the idea to represent the monadic part of the list definition via the free monad to her problem.
-As she was still a Haskell programmer with all her heart and the free monad was known to have various applications in functional programming, she continued to study free monads as a distraction of her current setback.
+As she was still a Haskell programmer with all her heart and the free monad was known to have various applications in functional programming, she continued to study free monads as a distraction from her current setback.
 
 As Mona was mainly looking for a way to represent the identity and the maybe monad, she checked how these monads can be represented by instances of [Free].
-She found the corresponding definitions in a book that mentioned free monads, written by %\cite{swierstra2008data}%.
+She found the corresponding definitions in a manuscript that mentioned free monads, written by %\cite{swierstra2008data}%.
 The identity monad corresponds to a free monad without the [impure] case, because the identity monad does not have any effect.
 That is, in order to model the identity monad, Mona needed a functor that had no inhabitants.
 This way, it was not possible to construct an impure value.
@@ -331,8 +335,8 @@ Then, Mona suddenly had an insight.
 By using a free monad she had gained one crucial advantage: she would be able to represent strictly positive monads if she was able to represent strictly positive functors.
 
 Motivated by this insight, she gained new impulse.
-She got in contact with a group of wise women and men in the area of verification stating her problem concerning Coq's restriction.
-These experts pointed her to a book by %\cite{keuchel2013generic}%.
+She got in contact with a group of sages in the area of verification stating her problem concerning Coq's restriction.
+These experts pointed her to a manuscript by %\cite{keuchel2013generic}%.
 %\citeauthor*{keuchel2013generic}% wanted to define the following data type in Coq that can be used to define the fix point of a functor.
 
 *)
@@ -344,7 +348,7 @@ Fail Inductive FixF F := fixF : F (FixF F) -> FixF F.
 The type [FixF] is a generalization of [Mu] as defined in %\autoref{section:the-problem}%.
 Thus, the data type [FixF] cannot be defined in Coq because the functor [F] might place its argument [FixF F] in a non-strictly positive position.
 In order to be able to define this data type the functor [F] has to be restricted.
-This restriction is based on the notion of containers as introduced by %\cite{abbott2003categories}%.
+This restriction is based on the notion of containers as introduced by %\cite{abott2003categories}%.
 Mona was quite happy about the feedback because she could use the same approach to define [Free].
 
 %\subsection*{Containers}%
@@ -446,6 +450,7 @@ Proof.
   destruct p.
 Qed.
 (* end hide *)
+
 (**
 
 In order to define a data type that represented all free monads whose functor was a container, Mona defined a type class named [Container].
@@ -472,6 +477,7 @@ Arguments from {_} {_} {_} _.
 (**
 
 In order to complete the example for [One], Mona defined the following instance named [C__One]%\footnote{Mona could define multiple instances for the same type in Coq, because all instances were explicitly named.}%.
+
 *)
 (* begin hide *)
 (*
@@ -844,10 +850,13 @@ Section Fold.
 
   (* end hide *)
 (**
-When Mona continued reading about free monads, she read that for every monad there was a monad homomorphism between the instance of [Free] and the corresponding monad.
-This homomorphism was often defined by means of a fold function for the [Free] data type.
+When Mona continued reading about free monads, she read that from every natural transformation from a functor [f] to a monad [m] she can construct a monad homomorphism from [Free f] to [m].
+Therefore, for every monad [m] there exists a monad homomorphism from an instance of [Free] to [m] because she can use the identity function as natural transformation.
+More precisely, the simplest construction Mona can use to model a monad [m] is to represent it as [Free m].
+
+The homomorphism was often defined by means of a fold function for the [Free] data type.
 One other important function on [Free] that Mona wanted to define was the function bind, which was associated with monads.
-She found the following definitions of [fold] and bind on [Free] in the book by %\cite{swierstra2008data}%.
+She found the following definitions of [fold] and bind on [Free] in the manuscript by %\cite{swierstra2008data}%.
 
 %\begin{verbatim}
     foldFree :: Functor f => (a -> b) -> (f b -> b) -> Free f a -> b
@@ -901,27 +910,32 @@ As there are no values of type [Zero A], Mona used an empty pattern match to get
 
 Mona was quite satisfied with her development so far, using containers she successfully defined a valid type definition for free monads in Coq.
 However, Mona also realized an important point she had not considered before.
-Namely, while for every monad there exists a homomorphism from a free monad to the monad, there is not necessary a function from the monad back to the free monad, such that the homomorphism forms an isomorphism with this function.
+Namely, while for every monad [m] there exists a functor [f] with a homomorphism from [Free f] to [m], there is not necessarily a function from the monad back to the free monad, such that the homomorphism forms an isomorphism with this function.
 For example, as mentioned by %\cite{swierstra2008data}%, the list monad is not a free monad in the sense that the list monad is not isomorphic to an instance of the free monad.
-In order to prove statements about more complex effects Mona would have to be able to model monads that were not free like the list monad.
+In order to prove statements about more complex effects Mona would have to be able to model monads like the list monad that were not free.
 Mona realized that she could not resort to structural equality as some values that were structurally equal in the original monad were not structurally equal in the the presentation using [Free f].
-This divergence is due to the fact that the resulting representation using [Free] would inhabit more values than the original monad, if the original monad is not a free monad.
-She observed, however, that she could use a custom equality for this kind of monads to solve this problem.
+This divergence is due to the fact that more values inhabit the resulting representation using [Free] than inhabit the original monad, if the original monad is not a free monad.
+She observed, however, that she could use a custom equality for this kind of monad to solve this problem.
 When proving a statement in a setting with a monad that was not a free monad, she would use a custom equality instead of using structural equality.
 
 At first, defining this kind of custom equality felt like an involved task to Mona, because she had to compare two instances of the free monad that used a container extension as functor.
 However, Mona realized that she could define the equality by means of [induce] and an equality on the original monad.
 That is, in order to compare two instances of the free monad she could use the homomorphism to map these instances to the original monad and use structural equality on the monadic terms.
 This way she was able to model an effect that is not free.
-In a nutshell, Mona would interprete the [Free] values as their monadic representatives and compare the monadic values using structural equality.
+In a nutshell, Mona would interpret the [Free] values as their monadic representatives and compare the monadic values using structural equality.
 
-In another round of poring over her books, Mona found an implementation by %\cite{verbruggen2008polytypic}% that uses polynomial functors to
+In another round of poring over her manuscripts, Mona found an implementation by %\cite{verbruggen2008polytypic}% that uses polynomial functors to
 define generic data types in Coq.
-The encoding using polynomial functors represents data types as combination of four primitive constructors: unit, identity, coproduct and sum.
+The encoding using polynomial functors represents data types as combinations of four primitive constructors: unit, identity, product, and sum.
 One disadvantage of this encoding is that many interesting data types cannot be represented: there is no possibility to represent function types at least not without running into problems concerning the strict positivity restriction, again.
-In contrast, Mona found implementations of more involved effects like state using the free monad in combination with a container.%\footnote{For example, Mona found an implementation of the state monad in Agda using a free monad and containers. \url{https://github.com/agda/agda-stdlib/blob/v2.4.0/README/Container/FreeMonad.agda}}%
-When she studied the implementation of these effects, Mona observed that effects like state can only be encoded using function types.
-She was quite astonished by the variety of monads she could model in her current setting.
+In contrast, Mona could reason about all monads [m] that are free monads in the sense that there exists a functor [f] such that [m] is isomorphic to [Free f].
+Mona had the additional restriction that [f] had to be a container.
+For example, identity, maybe and error are free monads whose functors are containers.
+
+If a monad [m] is not a free monad, that is, it is not isomorphic to some instance of [Free], Mona could still reason about it using a custom equality as long as the functor can be modeled using a container.
+For example, the state monad is not a free monad but can be modeled using a container.
+Mona found implementations of more involved effects like state using the free monad in combination with a container.%\footnote{For example, Mona found an implementation of the state monad in Agda using a free monad and containers (\url{https://github.com/agda/agda-stdlib/blob/v2.4.0/README/Container/FreeMonad.agda}).}%
+Mona was quite astonished by the variety of monads she could model in her current setting.
 Then she once again considered the continuation monad that she failed to instantiate in the beginning of her journey.
 Indeed, it was still not possible to model the continuation monad using a container extension.
 It was a bit of a pity for Mona that she could not represent the continuation monad, nevertheless, for now, she was content with the variety of monads that she could represent with her encoding.
@@ -1075,7 +1089,7 @@ Section List_ind.
 Mona was quite happy with her implementation of a list with monadic effects.
 As a next step, she wanted to prove a property about a simple Haskell function.
 First, she had to translate her Haskell program into a monadic Coq program.
-Fortunately, the book by %\cite{abel2005verifying}% contained the formal definition of a transformation of Haskell programs into Agda programs.
+Fortunately, the manuscript by %\cite{abel2005verifying}% contained the formal definition of a transformation of Haskell programs into Agda programs.
 
 Right now Mona did not care about a formal definition of the translation to Coq, but was more interested in reasoning about the manually transformed code in Coq.
 Nevertheless she realized that the translation from Haskell to Coq was an interesting topic in itself.
@@ -1101,7 +1115,8 @@ In order to simplify the definition of monadic programs Mona defined the followi
 (**
 
 With these smart constructors and the monadic bind operator [>>=] at hand, Mona was ready to define functions on [List]s.
-As a simple example Mona defined the list concatenation.
+As a simple example Mona defined list concatenation.
+
  *)
 
   Fixpoint append' A (xs: List C__F A) (fys: Free C__F (List C__F A)) : Free C__F (List C__F A) :=
@@ -1115,7 +1130,7 @@ As a simple example Mona defined the list concatenation.
 
 (**
 
-%\jump{If you are fierce to know why Mona had to define \coqdocvar{append} using a helper function, you can follow Mona to get some insights about nested recursive function definitions in Coq in \autoref{app:nested}.
+%\jump{If you are keen to know why Mona had to define \coqdocvar{append} using a helper function, you can follow Mona to get some insights about nested recursive function definitions in Coq in \autoref{app:nested}.
 If you are already familiar with nested recursive function definitions in Coq or simply do not need more details for now, just read on.
 }%
 
@@ -1132,11 +1147,11 @@ End List.
 %\label{subsection:verify}%
 
 Finally, Mona had all the ingredients at hand to prove properties about Haskell functions.
-As she had read the book by %\cite{abel2005verifying}% she wanted to prove the associativity of [append] as well.
-In accordance with the book, she started to argue about a total world, that is, using the identity monad.
+As she had read the manuscript by %\cite{abel2005verifying}% she wanted to prove the associativity of [append] as well.
+In accordance with the manuscript, she started to argue about a total world, that is, using the identity monad.
 
 A classical proof of the associativity of append used structural induction over the argument list.
-In Coq, a proof by structural induction used a lemma called induction principle that is automatically generated for each data type.
+In Coq, a proof by structural induction used a lemma called the induction principle that is automatically generated for each data type.
 However, when Mona tried to apply the induction principle for the monadic list data type [List], it did not work as expected at first.
 
 In a nutshell, Mona needed to define a custom induction principle for the free monad data type [Free] as well as for [List], the list data type with monadic components.
@@ -1144,7 +1159,7 @@ One might wonder why she needed an induction principle for the data type [Free] 
 In the definition of the free data type at the beginning of %\autoref{section:free-monads}%, the [impure] constructor builds a stack of applications of the functor.
 To reason about this stack of functor applications an induction principle was required.
 
-%\jump{If you want to know why Mona failed to apply the induction principle, please read about all the insights she gained on induction princliples in \autoref{app:induction}.
+%\jump{If you want to know why Mona failed to apply the induction principle, please read about all the insights she gained on induction principles in \autoref{app:induction}.
 If you already know all about nested inductive type definitions and their induction principles or do not need more details for now, just read on.}%
 
 %\noindent% With the definitions of induction principles named [Free_Ind] and [List_Ind], respectively, at hand, Mona was eager to try her proof of the associativity of append again.
@@ -1383,7 +1398,7 @@ The [impure] case represented the constructor nothing and this constructor did n
 
 Mona was very satisfied with her solution.
 Up until now, she was able to prove statements about Haskell programs when only considering total values and was also able to consider partial values.
-She consulted the book by %\cite{abel2005verifying}% again and read the following paragraph.
+She consulted the manuscript by %\cite{abel2005verifying}% again and read the following paragraph.
 
 %\begin{quote}
 The reader may well wonder why we prove the same property twice, for two different monads --- why not just prove it once-and-for-all, for any monad?
@@ -1393,7 +1408,7 @@ While this may seem attractive in principle, it turns out to be much more diffic
 The scales fell from Mona's eyes.
 These statements did not hold in her setting.
 When using a free monad underneath, a generic proof was not that difficult anymore.
-If Mona proved a statement for the free monad for an arbitrary container, the statement would hold for all monads%\footnote{With the minor restriction that the monad can be represented by a container-based instance of the free monad.}%.
+If Mona proved a statement for the free monad for an arbitrary container, the statement would hold for all monads --- with the minor restriction that the monad can be represented by a container-based instance of the free monad.
 As this possibility was more than Mona had originally hoped for, she immediately began to write the following monad-generic proofs.
 
  *)
@@ -1477,27 +1492,35 @@ In general, Mona could not hope for false assumptions to complete the proofs.
 A more complex effect, for instance non-determinism, could actually have a recursive occurrence in the [impure] case.
 In this case the induction principle for [Free] came in handy.
 Mona used the induction hypothesis that said that the given statement already holds for all values that resulted from applying the position function [pf].
-More precisely, the induction hypothesis provided the following statement, which states that the statement holds for lists resulting from [pf p] for all possible positions [p]. %\small%[[
+More precisely, the induction hypothesis provided the following statement, which states that the statement holds for lists resulting from [pf p] for all possible positions [p].
+
+%\begin{small}%[[
 forall p : Pos s, append (pf p) (append fys fzs) = append (append (pf p) fys) fzs
 ]]
-%\normalsize%
+%\end{small}%
+
 After using functional extensionality she was able to simply apply this hypothesis by using [apply IH].
 In contrast, in the case of [Zero] there was no [impure] case and in the case of [One] the [impure] case did not contain any values.
 Thus, Mona did not need to use the induction hypothesis for these concrete instances.
 
 As hard days of working through Coq tactics and these proofs passed, Mona was very pleased with her current approach.
-She was even more than thrilled that using the free monad gave rise to generic proofs that hold for all monads that can be modelled using the free monad.
+She was even more than thrilled that using the free monad gave rise to generic proofs that hold for a whole class of monads.
+Furthermore, she observed that monad-generic proofs were not difficult at all.
+The case for the [pure] constructor was not difficult because it is closely connected to the corresponding case without effects.
+Even the proof for the [impure] constructor was reasonable simple.
+In the [impure] case Mona always had to prove --- with an induction hypothesis at hand --- that the statement holds for all possible positions.
+
 
 * A Case Study
 %\label{section:case-study}%
 
 %\lettrine{P}{roving}% a more or less trivial property for a single list function was not exactly setting the world on fire.
-Thus, Mona was fierce to try her approach to prove the correctness of actual Haskell code.
+Thus, Mona was eager to try her approach to prove the correctness of actual Haskell code.
 Since she was helping out with some classes at the department she stayed at, she seized the opportunity to teach her approach in class.
 The main topic of the class was to compare two implementations of queues.
 There was a naive implementation using a single list and a more advanced implementation that used two lists to improve the performance.
 In class they started with an implementation in Haskell and discussed that both concrete implementations are interchangeable with one another; the reasoning was backed up by property-based testing via QuickCheck%~\autocite{hughes2000quickcheck}%.
-Mona thought that the implementations would in particular be a good example, because they contained total as well as partial functions%\footnote{In fact, Mona had also read about this example in the book by \cite{abel2005verifying}.}%.
+Mona thought that the implementations would be a particularly good example, because they contained total as well as partial functions%\footnote{In fact, Mona had also read about this example in the manuscript by \cite{abel2005verifying}.}%.
 That is, some of the statements were only valid in the context of the maybe monad, while most statements held in the total as well as in the partial setting.
 
 %
@@ -1821,6 +1844,7 @@ Mona explained the students that all the following proofs assumed [A] to be an a
     - inversion Htotal2.
   Qed.
   (* end hide *)
+
 (**
 
 In contrast to the maybe-specific properties, the properties [prop_isEmpty] and [prop_add] held independently of the considered monad and could be proven once and for all.
@@ -1867,6 +1891,7 @@ Mona wrote a monad-generic proof of the following property.
     - inversion Htotal2.
   Qed.
   (* end hide *)
+
 (**
 
 Some time went by while Mona showed the class how to prove one of the QuickCheck properties after another.
@@ -1909,6 +1934,7 @@ At last, she proved the property [prop_add].
       apply H.
   Qed.
   (* end hide *)
+
 (**
 
 After all proofs were done, one of Mona's students complained about the definition of [front].
@@ -1945,7 +1971,7 @@ The combination of all of these ideas led to a new approach to model and prove p
 Even more importantly, while %\cite{abel2005verifying}% thought it difficult to prove monad-generic statements, Mona had discovered that it was not that difficult after all.
 She was able to prove statements using an arbitrary effect represented using the free monad, whose functor is a container.
 
-Mona really looked forward to continue pursuing her PhD because there were so many questions she would like to have an answer to.
+Mona really looked forward to continuing to pursue her PhD because there were so many questions she would like to have an answer to.
 For now she only considered the effect of partiality, while her proofs held for arbitrary effects.
 For example, using her approach she could model lazy tracing as provided by the function [trace] by means of a simple reader monad.
 The best news about her current setup was that all the monad-generic proofs would still hold in this setting.
@@ -1953,7 +1979,7 @@ The best news about her current setup was that all the monad-generic proofs woul
 Besides extending her simple model of Haskell with more advanced effects, Mona planned to use her setting to model other programming languages.
 For example, a functional logic programming language like Curry can be modeled by the same transformation as shown by %\cite{fischer2009purely}%.
 This model uses a non-determinism monad instead of the partiality monad.
-Mona also planned to investigate modeling a probabilistic programming language as she read that functional logic and probabilistic programming are closely related in a book by %\cite{dylus2018probabilistic}%.
+Mona also planned to investigate modeling a probabilistic programming language as she read that functional logic and probabilistic programming are closely related in a manuscript by %\cite{dylus2018probabilistic}%.
 
 When Mona looked into effects like non-determinism, she observed that there were some additional requirements.
 While the free monad extends a functor [f] with an additional structure to define the functions [ret] and [bind], the free monad provides exactly this structure only.
@@ -1961,20 +1987,21 @@ However, some monads provide more structure than given by a free monad.
 Mona thought about the list monad again, which was not a free monad and needed a custom equality in her setting as discussed in %\autoref{subsection:freeCoq}%.
 In order to prove statements that rely on additional properties of a concrete monad, Mona could not resort to structural equality, she would have to define a custom equality.
 However, defining custom equalities for free monads by means of the corresponding monad homomorphism is straightforward.
-Furthermore, monad-generic proofs can also be reused in a setting with a custom equality because terms that are definitional equal are also equal with respect to a custom equality.
+Furthermore, monad-generic proofs can also be reused in a setting with a custom equality because terms that are definitionally equal are also equal with respect to a custom equality.
 
-Thinking about different effects raised the question if the translation of programs had to be adapted.
+Thinking about different effects raised the question of whether the translation of programs had to be adapted.
 Mona's current translation was based on the optimized version by %\cite{abel2005verifying}%, where partiality was the only effect that could occur.
 In this case a function [f] of type [tau -> tau'] could be modeled by a Coq function of type [M tau -> M tau'].
 However, in a more general setting, Mona had to use a function of type [M (M tau -> M tau')] instead.
-For example, if [seq] is available, one can observe whether a function [f] is defined as [undefined] or as [fun x -> undefined].
+For example, if [seq] is available, one can observe whether a function [f] is defined as [undefined] or as [fun x => undefined].
 For instance, the expression [seq f 42] fails in the former case, but yields [42] in the latter case.
 
 Using function types of the form [M (M tau -> M tau')] is in particular important, when modeling a functional logic language.
-For example, some free theorems fail in the context of functional logic languages due to the difference between a non–deterministic choice of two functions and a function that yields two non-deterministic results as shown by %\cite{christiansen2010free}% and elaborated by %\cite{mehner2014parametricity}%.
+For example, some free theorems fail in the context of functional logic languages due to the difference between a non–deterministic choice of two functions and a function that non-deterministically yields two results as shown by %\cite{christiansen2010free}% and elaborated by %\cite{mehner2014parametricity}%.
 Mona wanted to use her framework for a variety of effects, thus, the optimized translation of function types used by %\cite{abel2005verifying}% was not applicable anymore.
 
-Finally, Mona wondered about a more direct modeling of strictly positive monads.
+Finally, Mona wondered about other possibilities to model the monadic data types she wanted to define.
+One possible alternative was to use a more direct modeling of strictly positive monads.
 Currently, she used a free monad whose functor is a container.
 Instead she could as well use only a container.
 For example, the identity and the maybe monad can be modeled as containers.
@@ -1983,6 +2010,17 @@ This way she could even model the list monad without using a custom equality.
 However, when using container monads directly Mona could only reason about monadic programs using monad laws.
 %\cite{abel2005verifying}% did not consider monad-generic proofs because they had to resort to monad laws.
 In contrast, Mona's current approach using free monads enabled Coq to compute with a general monad and simplify properties by reduction.
+Another alternative was to use freer monads introduced by %\cite{kiselyov2015freer}%, whose definition did not need a representation of striclty positive types using containers at all.
+There were already several encodings to model different kinds of monadic effects using freer monads: %\cite{mcbride2015turingcompleteness}% defines a [General] monad to model general recursion as effect, %\cite{letan2018modular}% use the [Program] monad initially presented in the operational package known from Haskell%\footnote{\url{http://hackage.haskell.org/package/operational}}% to reason about a small imperative language, and %\cite{koh2018interaction}% identify %\emph{interaction trees}% as a suitable tool to verify functional correctness of a server implemented in C.
+
+The case study about queues only involved two data structures: lists and pairs.
+Lifting data types into their monadic counterparts follows a general scheme.
+Mona found a manuscript by %\cite{atkey2015interleaving}% that showed how to benefit from describing inductive types interleaved with effects as initial f-and-m-algebras.
+Their description of data types interleaved with effects was similar to the monadic lifting that Mona pursued.
+The benefit of using %\emph{initial f-and-m-algebras}% came from the clear separation of monadic effects described by the [m] and the pure data structure represented by a functor [f].
+This observation reminded Mona of her own proofs about the associativity of [append] as well as other proofs using induction.
+There were always two cases to consider: the pure case and the impure case, where the pure cases was then again divided into the different constructors of the data type involved.
+Mona was eager to find out if her approach can also benefit from the abstractions used in the work of %\citeauthor{atkey2015interleaving}%.
 
 As Mona knew that a successful PhD student would interest her peers in her results, she started to spread the word about her work.
 In order to practice her writing skills, she also wrote a short story about her journey through the land of functional programming.
@@ -2016,7 +2054,7 @@ Furthermore, we are thankful for the remarks and suggestions from the anonymous 
 %\subsection{Definition of fold and bind}%
 %\label{app:foldbind}%
 
-Mona wanted to translate the Haskell definition of the functions fold and bind on [Free] she found in the book by %\cite{swierstra2008data}%.
+Mona wanted to translate the Haskell definition of the functions fold and bind on [Free] she found in the manuscript by %\cite{swierstra2008data}%.
 She started with fold as it looked like the easier task.
 
 <<
@@ -2030,15 +2068,19 @@ However, instead of using the function [fmap] she could use a concrete mapping f
 This way she could get rid of the additional [Functor] constraint.
 
 Mona defined the following map function for the container [C__F], where [Shape] and [Pos] are the types associated with the container.
+
+%\small%
 [[
   Definition cmap A B (f : A -> B) (x : Ext Shape Pos A) : Ext Shape Pos B :=
     match x with
     | ext s pf => ext s (fun x => f (pf x))
     end.
 ]]
-
+%\normalsize%
 %\noindent% Based on the definition of [cmap], she implemented the following recursive function to fold [Free] expressions.
 As the function [imp] worked on arguments of type [F B], Mona applied the function [to] on the argument of [imp] to transform the container representation into the concrete structure [F].
+
+%\small%
 [[
   Fixpoint fold_free A B (pur : A -> B) (imp : F B -> B) (fx : Free C__F A) : B :=
     match fx with
@@ -2046,7 +2088,7 @@ As the function [imp] worked on arguments of type [F B], Mona applied the functi
     | impure e => imp (to (cmap (fold_free pur imp) e))
     end.
 ]]
-
+%\normalsize%
 %\noindent% Besides the special handling of the container construction, the translation was quite straightforward.
 Next up, Mona took another look at the Haskell definition of the bind operator for [Free].
 %
@@ -2059,6 +2101,8 @@ Next up, Mona took another look at the Haskell definition of the bind operator f
 
 %\noindent% For her translation to Coq, she did not need to use [fmap], as above, but the auxiliary function [cmap].
 Otherwise the two definitions looked quite alike.
+
+%\small%
 [[
   Fixpoint free_bind A B (fx : Free C__F A) (f : A -> Free C__F B) : Free C__F B :=
     match fx with
@@ -2066,12 +2110,16 @@ Otherwise the two definitions looked quite alike.
     | impure e => impure (cmap (fun x => free_bind x f) e)
     end.
 ]]
+%\normalsize%
+
 Only later, Mona realized that the definition caused problems.
 When she tried to define recursive functions that use [free_bind], Coq's termination checker nagged about most of her programs.
 
 As Mona studied a lot of Coq code during her journey, she remembered that recursive functions were often defined using so-called [Section]s.
 For example, the standard library for lists in Coq follows the same approach to define functions like [map], [fold_right] and [fold_left].
 She changed her code as follows.
+
+%\small%
 [[
   Section fbind.
 
@@ -2086,6 +2134,7 @@ She changed her code as follows.
 
   End fbind.
 ]]
+%\normalsize%
 
 %\noindent% At the start of the section Mona introduced all variables annotated with their types that would be used throughout the
 section.
@@ -2117,7 +2166,9 @@ Section ListAppendix.
 (**
 %\noindent% Unfortunately, Coq did not accept this definition of [append] because the termination checker was not able to guess the decreasing argument.
 However, Coq's termination checker accepted the following definition that was based on a helper function.
-%\small% [[
+
+%\small%
+[[
   Fixpoint append' A (xs: List C__F A) (fys: Free C__F (List C__F A)) : Free C__F (List C__F A) :=
     match xs with
     | nil => fys
@@ -2132,7 +2183,7 @@ However, Coq's termination checker accepted the following definition that was ba
 Mona discovered that she could please Coq's termination checker by splitting the definition into two parts: a recursive function [append'] that had an argument of type [List A] and a non-recursive function [append] that called [append'] after unwrapping the monadic effect.
 
 The main problem with Mona's original definition was that [List A] was a nested inductive type, [Free (List A)] occurred nested in [List A].
-That is, to define a recursive function, Mona had to use nested recursion in the definition of [append'] as she had read about in the book by %\cite{chlipala2011certified}%.
+That is, to define a recursive function, Mona had to use nested recursion in the definition of [append'] as she had read about in the manuscript by %\cite{chlipala2011certified}%.
 More precisely, the function [append'] was nested recursive because [>>=] was recursive and used nested in [append].
 In the second branch of [append'] she had to inline the definition of [append] in order to resemble the nested recursive structure of the [List A] data type.
 
@@ -2146,7 +2197,10 @@ End ListAppendix.
 %\label{app:induction}%
 
 In order to understand what exactly was going on, Mona took some time for getting a better understanding of some technicalities of the programming language Coq.
-She started to look at the induction principle for [nat] in Coq.%\footnote{The command \coqdocvar{Check nat\_ind} prints the type of the induction principle \coqdocvar{nat\_ind}.}%%\small%[[
+She started to look at the induction principle for [nat] in Coq.%\footnote{The command \coqdocvar{Check nat\_ind} prints the type of the induction principle \coqdocvar{nat\_ind}.}%
+
+%\small%
+[[
   nat_ind : forall P : nat -> Prop,
     P 0
     -> (forall m : nat, P m -> P (S m))
@@ -2156,7 +2210,10 @@ She started to look at the induction principle for [nat] in Coq.%\footnote{The c
 %\noindent% A proposition [P n] holds for all [n : nat], if [P] holds for [0] and, for all [m : nat], [P] holds for [S m] given that it already holds for [m].
 For all [m : nat] the proposition [P m] is called the induction hypothesis.
 
-Next, Mona took a look at the induction principle that was generated for the monadic list type [List]%\footnote{Coq generates an induction principle called \coqdocvar{List\_ind} for a data type called \coqdocvar{List}.}%.%\small%[[
+Next, Mona took a look at the induction principle that was generated for the monadic list type [List]%\footnote{Coq generates an induction principle called \coqdocvar{List\_ind} for a data type called \coqdocvar{List}.}%.
+
+%\small%
+[[
   List_ind : forall (A : Type) (P : List C__F A -> Prop),
     P (nil C__F A)
     -> (forall (fx : Free C__F A) (fxs : Free C__F (List C__F A)), P (cons fx fxs))
@@ -2168,14 +2225,17 @@ However, while there was a base case for the empty list, that is [P (nil C__F A)
 
 In order to prove a statement about [List], Mona also needed an induction principle for [Free].
 When Mona checked the induction principle for [Free], it showed the same problem as the induction principle for [List].
-She would have to prove [P (impure e)] without knowing anything about [e].%\small%[[
+She would have to prove [P (impure e)] without knowing anything about [e].
+
+%\small%
+[[
   Free_ind : forall (A : Type) (P : Free C__F A -> Prop),
     (forall x : A, P (pure x))
     -> (forall e : Ext Shape Pos (Free C__F A), P (impure e))
     -> forall (fx : Free C__F A), P fx
 ]]
 %\normalsize%
-%\noindent% After some research Mona found a chapter in %\citeauthor{chlipala2011certified}%'s book that explained how to define induction principles that fit one's purpose.
+%\noindent% After some research Mona found a chapter in %\citeauthor{chlipala2011certified}%'s manuscript that explained how to define induction principles that fit one's purpose.
 The chapter also stated that the induction principles of nested data types generated by Coq are too weak (most of the time).
 Now all Mona had to do was to define her own induction principle for [List] and [Free].
 Since [Free] is used nested in [List], Mona started with [Free].
@@ -2187,7 +2247,10 @@ Intuitively the [impure] constructor contains a container extension of values of
 Obviously, Mona needed the proposition [P] to hold for all elements of the container extension.
 Therefore, she added the requirement that every [Free A] that can be produced by the position function [pf : Pos s -> Free A] satisfied proposition [P].
 If that was the case, then [P] held for [impure (ext s pf)].
-Mona made the following changes.%\small%[[
+Mona made the following changes.
+
+%\small%
+[[
   Free_Ind : . . .
     . . .
     -> (forall (s : Shape) (pf : Pos s -> Free C__F A), (forall p, P (pf p)) -> P (impure (ext s pf)))
@@ -2195,7 +2258,10 @@ Mona made the following changes.%\small%[[
 ]]
 %\normalsize%
 Finally, Mona had to provide a function of the type of [Free_Ind].
-Mona thought that the puzzle pieces fitted together quite naturally when she defined the following function via pattern matching on [fx : Free A]. %\small% [[
+Mona thought that the puzzle pieces fitted together quite naturally when she defined the following function via pattern matching on [fx : Free A].
+
+%\small%
+[[
   Fixpoint Free_Ind A (P : Free C__F A -> Prop)
       (pur : forall (x : A), P (pure x))
       (imp : forall (s : Shape) (pf : Pos s -> Free C__F A), (forall p, P (pf p)) -> P (impure (ext s pf)))
@@ -2212,11 +2278,14 @@ As first two arguments Mona used the arguments [s] and [pf]; as third argument s
 The induction principle [Free_Ind] had type [(f x : Free A) -> P fx] and, thus, matched the required type when Mona applied [pf] to a given position [p].
 The other arguments used in the application of [Free_Ind] are the proposition [P] as well as the hypotheses [pur] and [imp] that remained unchanged.
 
-Based on her new knowledge about the definition of induction principles and the example in %\citeauthor*{chlipala2011certified}%'s book %\autocite{chlipala2011certified}%, Mona also successfully defined an induction principle [List_Ind] for the data type [List].
+Based on her new knowledge about the definition of induction principles and the example in %\citeauthor*{chlipala2011certified}%'s manuscript %\autocite{chlipala2011certified}%, Mona also successfully defined an induction principle [List_Ind] for the data type [List].
 Mona used induction for ordinary lists all the time.
 In the base case, the statement had to be proven for the empty list.
 For a non-empty list [cons x xs] there was a hypothesis in place that said that the statement already hold for [xs].
-In the definition of [List] both arguments of [Cons] were wrapped in [Free], such that Coq did not generate any hypotheses for the remaining list in the induction principle presented earlier. %\small%[[
+In the definition of [List] both arguments of [Cons] were wrapped in [Free], such that Coq did not generate any hypotheses for the remaining list in the induction principle presented earlier.
+
+%\small%
+[[
   List_ind : forall (A : Type) (P : List C__F A -> Prop),
     P (nil C__F A)
     -> (forall (fx : Free C__F A) (fxs : Free C__F (List C__F A)), P (cons fx fxs))
@@ -2225,7 +2294,10 @@ In the definition of [List] both arguments of [Cons] were wrapped in [Free], suc
 %\normalsize%
 The same problem occurs when an induction principle is generated for an arbitrary data structure [DT] that contains a list of [DT] as argument in one of its constructors.
 In the case of nested lists, an additional property is commonly used to lift propositions for [A] to lists of [A], that is, to state that the property holds for all elements of a list.
-Mona applied this idea and defined the following proposition [ForFree] that lifted a proposition for [A] to [Free A].%\small%[[
+Mona applied this idea and defined the following proposition [ForFree] that lifted a proposition for [A] to [Free A].
+
+%\small%
+[[
   Inductive ForFree A (P : A -> Prop) : Free C__F A -> Prop :=
   | For_pure : forall x : A, P x -> ForFree P (pure x)
   | For_impure : forall (s : Shape) (pf : Pos s -> Free C__F A),
@@ -2237,7 +2309,10 @@ In case of [pure x] the proposition was valid if [P x] held.
 For [impure (ext s pf)] the proposition was valid if [P] held for all elements of the container [ext s pf].
 To state that [P] held for all elements of the container [ext s pf] Mona used the same idea as for the definition of [Free_Ind].
 
-With the definition of [ForFree] at hand, she defined the induction principle [List_Ind] that used a hypothesis about the remaining list in the [cons] case.%\small%[[
+With the definition of [ForFree] at hand, she defined the induction principle [List_Ind] that used a hypothesis about the remaining list in the [cons] case.
+
+%\small%
+[[
   List_Ind : . . .
     . . .
     -> (forall (fx : Free C__F A) (fxs : Free (List C__F A)), ForFree P fxs -> P (cons fx fxs))

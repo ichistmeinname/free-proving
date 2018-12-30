@@ -121,32 +121,32 @@
 \begin{abstract}
 One Monad to Prove Them All is a modern fairy tale about curiosity and
 perseverance, two important properties of a successful PhD student.
-We follow the PhD student Mona on her adventurous journey of proving
+We follow the PhD student Mona on her adventure of proving
 properties about Haskell programs in the proof assistant Coq.
 
 On the one hand, as a PhD student in computer science Mona observes an increasing demand for correct software products.
 In particular, because of the large amount of existing software, verifying existing software products becomes more important.
 Verifying programs in the functional programming language Haskell is no exception.
 On the other hand, Mona is delighted to see that communities in the
-area of theorem proving become popular.
+area of theorem proving are becoming popular.
 Thus, Mona sets out to learn more about the interactive theorem prover Coq and verifying Haskell programs in Coq.
 
 To prove properties about a Haskell function in Coq, Mona has to
 translate the function into Coq code.
 As Coq programs have to be total and Haskell programs are often not,
 Mona has to model partiality explicitly in Coq.
-In her quest for a solution Mona finds an ancient book that explains
+In her quest for a solution Mona finds an ancient manuscript that explains
 how properties about Haskell functions can be proven in the proof
 assistant Agda by translating Haskell programs into monadic Agda
 programs.
 By instantiating the monadic program with a concrete monad instance
-the proof can be either performed in a total or a partial setting.
+the proof can be performed in either a total or a partial setting.
 Mona discovers that the proposed transformation does not work in Coq
 due to a restriction in the termination checker.
 In fact the transformation does not work in Agda anymore as well, as
 the termination checker in Agda has been improved.
 
-We follow Mona on an educating journey through the land of functional
+We follow Mona on an educational journey through the land of functional
 programming where she learns about concepts like free
 monads and containers as well as basics and restrictions of proof
 assistants like Coq.
@@ -156,10 +156,11 @@ monadic tranformation that has not been presented before.
 When Mona starts to test her approach by proving a statement about
 simple Haskell functions, she realizes that her approach has an
 additional advantage over the original idea in Agda.
-Mona's final solution does not only work for a specific monad instance
+Mona's final solution not only works for a specific monad instance
 but even allows her to prove monad-generic properties.
 Instead of proving properties over and over again for specific monad
-instances she is able to prove properties that hold for all monads.
+instances she is able to prove properties that hold for all monads
+representable by a container-based instance of the free monad.
 In order to strengthen her confidence in the practicability of her
 approach, Mona evaluates her approach in a case study that compares
 two implementations for queues.
