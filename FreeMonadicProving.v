@@ -34,7 +34,7 @@
 (** printing tau__n %$\tau_\coqdocvar{n}$% *)
 (** printing tau__i %$\tau_\coqdocvar{i}$% *)
 
-(** %\newpage\paragraph{Prologue}% This is a literate Coq file%\footnote{It can be downloaded at \url{https://tinyurl.com/free-proving}.}%, that is,
+(** %\newpage\paragraph{Prologue}% This is a literate Coq file%\footnote{It can be downloaded at \url{https://zenodo.org/badge/latestdoi/136580106}.}%, that is,
     it can be compiled with Coq%\footnote{The file was tested with Coq version 8.7 and 8.8.}% as it is. *)
 
 (* begin hide *)
@@ -131,11 +131,11 @@ Meanwhile, the king of the kingdom of Agda had realized that the rules needed to
 The programs that could be defined using the old rules were not safe!
 Following the example of the magical kingdom of Coq, non-strictly positive occurrences as mentioned in the error message above were now disallowed in the kingdom of Agda as well.
 
-In this story, we will follow Mona D. on her journey to find a model for Haskell programs in Coq that obeys the king's rules.
-We will learn the laws of the kingdom of Coq from the perspective of a programmer from the kingdom of Haskell.
-Mona will also meet fellows with an interest in  more theoretical aspects of functional programs and approaches for generic programming in Haskell.
-On the way to achieving her goal, there are many obstacles to overcome.
-Led by her curiosity and her perseverance, reading a lot of manuscripts and meeting with her fellows will ultimately give our hero the inspiration how to tackle her problem.
+In this story, Mona D. went on a journey to find a model for Haskell programs in Coq that obeyed the king's rules.
+She learned about the laws of the kingdom of Coq from the perspective of a programmer from the kingdom of Haskell.
+Mona would also meet fellows with an interest in  more theoretical aspects of functional programs and approaches for generic programming in Haskell.
+On the way to achieving her goal, there were many obstacles to overcome.
+Led by her curiosity and her perseverance, reading a lot of manuscripts and meeting with her fellows would ultimately give Mona the inspiration how to tackle her problem.
 
 * The Problem
 %\label{section:the-problem}%
@@ -1408,7 +1408,7 @@ While this may seem attractive in principle, it turns out to be much more diffic
 The scales fell from Mona's eyes.
 These statements did not hold in her setting.
 When using a free monad underneath, a generic proof was not that difficult anymore.
-If Mona proved a statement for the free monad for an arbitrary container, the statement would hold for all monads --- with the minor restriction that the monad can be represented by a container-based instance of the free monad.
+If Mona proved a statement for the free monad for an arbitrary container, the statement would hold for a whole class of monads --- with the minor restriction that the monad can be represented by a container-based instance of the free monad.
 As this possibility was more than Mona had originally hoped for, she immediately began to write the following monad-generic proofs.
 
  *)
